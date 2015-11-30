@@ -16,6 +16,8 @@ sys.modules['distutils.command.test'] = sys.modules[__name__]
 distutils.command.test = sys.modules[__name__]
 sys.modules['distutils.command.build_test'] = sys.modules[__name__]
 distutils.command.build_test = sys.modules[__name__]
+_cmdidx = distutils.command.__all__.index('clean')
+distutils.command.__all__[_cmdidx:_cmdidx] = ['build_test', 'test']
 
 
 class _tmpchdir:
@@ -36,6 +38,8 @@ class build_test(Command):
     build.  It does nothing, but it can be overridden by custom code
     in setup.py to build the test environment.
     """
+    description = "set up test environment"
+    user_options = []
     def initialize_options(self):
         pass
     def finalize_options(self):
