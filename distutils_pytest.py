@@ -14,6 +14,8 @@ __version__ = "0.1"
 import distutils.command
 sys.modules['distutils.command.test'] = sys.modules[__name__]
 distutils.command.test = sys.modules[__name__]
+sys.modules['distutils.command.build_test'] = sys.modules[__name__]
+distutils.command.build_test = sys.modules[__name__]
 
 
 class _tmpchdir:
@@ -27,6 +29,19 @@ class _tmpchdir:
         return os.getcwd()
     def __exit__(self, type, value, tb):
         os.chdir(self.savedir)
+
+
+class build_test(Command):
+    """Dummy.  This command is called at the beginning of test after
+    build.  It does nothing, but it can be overridden by custom code
+    in setup.py to build the test environment.
+    """
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        pass
 
 
 class test(Command):
@@ -51,6 +66,7 @@ class test(Command):
     def run(self):
         if not self.skip_build:
             self.run_command('build')
+            self.run_command('build_test')
 
         # Add build_lib to the module search path to make sure the
         # built package can be imported by the tests.  Manipulate
