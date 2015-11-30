@@ -7,6 +7,15 @@ from distutils.spawn import spawn
 __version__ = "0.1"
 
 
+# Inject this module as "test" into the distutils.command package.
+# This is needed because distutils.dist.Distribution searches commands
+# by trying to import the respective module from this package.
+
+import distutils.command
+sys.modules['distutils.command.test'] = sys.modules[__name__]
+distutils.command.test = sys.modules[__name__]
+
+
 class _tmpchdir:
     """Temporarily change the working directory.
     """
