@@ -7,17 +7,23 @@ from distutils.spawn import spawn
 __version__ = "0.1"
 
 
-# Inject this module as "test" into the distutils.command package.
-# This is needed because distutils.dist.Distribution searches commands
-# by trying to import the respective module from this package.
+def _inject_distutils_command():
+    """Inject this module into the distutils.command package.
 
-import distutils.command
-sys.modules['distutils.command.test'] = sys.modules[__name__]
-distutils.command.test = sys.modules[__name__]
-sys.modules['distutils.command.build_test'] = sys.modules[__name__]
-distutils.command.build_test = sys.modules[__name__]
-_cmdidx = distutils.command.__all__.index('clean')
-distutils.command.__all__[_cmdidx:_cmdidx] = ['build_test', 'test']
+    This is needed because distutils.dist.Distribution searches
+    commands by trying to import the respective module from this
+    package.
+    """
+    import distutils.command
+    mod = sys.modules[__name__]
+    cmds = ['build_test', 'test']
+    for c in cmds:
+        sys.modules['distutils.command.%s' % c] = mod
+        setattr(distutils.command, c, mod)
+    i = distutils.command.__all__.index('clean')
+    distutils.command.__all__[i:i] = cmds
+
+_inject_distutils_command()
 
 
 class _tmpchdir:
