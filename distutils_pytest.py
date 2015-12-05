@@ -79,7 +79,7 @@ class test(Command):
             self.run_command('build_test')
 
         # Add build_lib to the module search path to make sure the
-        # built package can be imported by the tests.  Manipulate
+        # built packages can be imported by the tests.  Manipulate
         # both, sys.path to affect the current running Python, and
         # os.environ['PYTHONPATH'] to affect subprocesses spawned by
         # the tests.
@@ -97,9 +97,9 @@ class test(Command):
         sys.dont_write_bytecode = True
         os.environ['PYTHONDONTWRITEBYTECODE'] = "1"
 
-        # Must change the directory, otherwise the icat package in the
-        # cwd would override the one from build_lib.  Alas, there seem
-        # to be no way to tell Python not to put the cwd in front of
+        # Must change the directory, otherwise modules in the cwd
+        # would override the one from build_lib.  Alas, there seem to
+        # be no way to tell Python not to put the cwd in front of
         # $PYTHONPATH in sys.path.
         testcmd = [sys.executable, "-m", "pytest"]
         if self.test_args:
