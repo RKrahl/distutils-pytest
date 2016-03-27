@@ -58,7 +58,8 @@ class test(Command):
 
     description = "run the tests"
     user_options = [
-        ('build-lib=', 'd', "directory to \"build\" (copy) to"),
+        ('build-lib=', None, "build directory for modules"),
+        ('build-scripts=', None, "build directory for scripts"),
         ('skip-build', None,
          "skip rebuilding everything (for testing/debugging)"),
         ('test-args=', None, "extra arguments to pass to pytest"),
@@ -67,11 +68,14 @@ class test(Command):
 
     def initialize_options(self):
         self.build_lib = None
+        self.build_scripts = None
         self.skip_build = 0
         self.test_args = None
 
     def finalize_options(self):
-        self.set_undefined_options('build', ('build_lib', 'build_lib'))
+        self.set_undefined_options('build', 
+                                   ('build_lib', 'build_lib'), 
+                                   ('build_scripts', 'build_scripts'))
 
     def run(self):
         if not self.skip_build:
@@ -92,6 +96,11 @@ class test(Command):
         except KeyError:
             # no, PYTHONPATH was not set.
             os.environ['PYTHONPATH'] = build_lib
+
+        # Set build_scripts in the environment so that tests are able
+        # to find and execute them.
+        build_scripts = os.path.abspath(self.build_scripts)
+        os.environ['BUILD_SCRIPTS_DIR'] = build_scripts
 
         # Do not create byte code during test.
         sys.dont_write_bytecode = True
