@@ -37,5 +37,5 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README.rst
+%doc README.rst CHANGES
 %{python3_sitelib}/*
