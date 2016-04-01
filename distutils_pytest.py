@@ -1,3 +1,6 @@
+"""Call pytest from a distutils setup.py script.
+"""
+
 import sys
 import os
 import os.path
