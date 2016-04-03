@@ -5,3 +5,8 @@ __pycache__/
 /MANIFEST
 /build/
 /dist/
+/doc/doctest/
+/doc/doctrees/
+/doc/html/
+/doc/latex/
+/doc/linkcheck/

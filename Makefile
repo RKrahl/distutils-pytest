@@ -10,6 +10,16 @@ build:
 test:
 	$(PYTHON) setup.py test
 
+doc-html:
+	$(MAKE) -C doc html
+
+doc-pdf:
+	$(MAKE) -C doc latexpdf
+
+doc-dist: doc-html
+	mkdir -p dist
+	cd doc/html; zip -r ../../dist/doc.zip *
+
 
 clean:
 	rm -f *~ tests/*~
@@ -21,6 +31,7 @@ distclean: clean
 	rm -f *.pyc
 	rm -rf __pycache__
 	rm -rf dist
+	$(MAKE) -C doc distclean
 
 
-.PHONY: sdist test clean distclean
+.PHONY: sdist build test doc-html doc-pdf clean distclean
