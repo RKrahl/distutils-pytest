@@ -9,6 +9,9 @@ may run::
 
 This will call `pytest`_ to run your package's test suite.
 
+See also the home page of the package at
+https://pythonhosted.org/distutils-pytest/
+
 
 System requirements
 -------------------

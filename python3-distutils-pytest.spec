@@ -4,6 +4,7 @@ Release:	1
 Summary:	Call pytest from a distutils setup.py script
 License:	Apache-2.0
 Group:		Development/Languages/Python
+Url:		https://pythonhosted.org/distutils-pytest/
 Source:		distutils-pytest-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	python3-devel

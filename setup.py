@@ -9,7 +9,7 @@ setup(
     description = distutils_pytest.__doc__.strip(),
     author = "Rolf Krahl",
     author_email = "rolf@rotkraut.de",
-    url = "https://github.com/RKrahl/distutils-pytest",
+    url = "https://pythonhosted.org/distutils-pytest/",
     license = "Apache-2.0",
     py_modules = ["distutils_pytest"],
     classifiers = [
