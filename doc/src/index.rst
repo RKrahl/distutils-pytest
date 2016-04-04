@@ -16,9 +16,6 @@ System requirements
  + Python 2.6, 2.7, or 3.1 and newer.
  + `pytest`_
 
-To be honest, the package might also work with older Python versions.
-But I didn't try it.
-
 
 Download
 --------
