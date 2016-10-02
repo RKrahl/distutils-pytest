@@ -13,6 +13,14 @@ See also the home page of the package at
 https://pythonhosted.org/distutils-pytest/
 
 
+Download
+--------
+
+The latest release version can be found at PyPI, see
+
+    https://pypi.python.org/pypi/distutils-pytest
+
+
 System requirements
 -------------------
 
