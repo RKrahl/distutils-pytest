@@ -24,8 +24,8 @@ The latest release version can be found at PyPI, see
 System requirements
 -------------------
 
- + Python 2.6, 2.7, or 3.1 and newer.
- + `pytest`_
++ Python 2.6, 2.7, or 3.1 and newer.
++ `pytest`_
 
 
 Installation
@@ -36,16 +36,15 @@ follows its conventions of packaging source distributions.  See the
 documentation on `Installing Python Modules`_ for details or to
 customize the install process.
 
-  1. Download the sources, unpack, and change into the source
-     directory.
+1. Download the sources, unpack, and change into the source directory.
 
-  2. Build::
+2. Build::
 
-       $ python setup.py build
+     $ python setup.py build
 
-  3. Install::
+3. Install::
 
-       $ python setup.py install
+     $ python setup.py install
 
 The last step might require admin privileges in order to write into
 the site-packages directory of your Python installation.
@@ -54,9 +53,9 @@ the site-packages directory of your Python installation.
 Copyright and License
 ---------------------
 
- - Copyright 2013-2015
-   Helmholtz-Zentrum Berlin für Materialien und Energie GmbH
- - Copyright 2015-2016 Rolf Krahl
+- Copyright 2013-2015
+  Helmholtz-Zentrum Berlin für Materialien und Energie GmbH
+- Copyright 2015-2016 Rolf Krahl
 
 Licensed under the Apache License, Version 2.0 (the "License"); you
 may not use this file except in compliance with the License.  You may
