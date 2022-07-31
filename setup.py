@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-from distutils.core import setup
+from setuptools import setup
 import distutils_pytest
 
 setup(
@@ -12,6 +12,12 @@ setup(
     url = "https://pythonhosted.org/distutils-pytest/",
     license = "Apache-2.0",
     py_modules = ["distutils_pytest"],
+    entry_points = {
+        "distutils.commands": [
+            "build_test = distutils_pytest:build_test",
+            "test = distutils_pytest:test",
+        ]
+    },
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",

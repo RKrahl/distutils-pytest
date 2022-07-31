@@ -4,29 +4,10 @@
 import sys
 import os
 import os.path
-from distutils.core import Command
+from setuptools import Command
 from distutils.spawn import spawn
 
 __version__ = "0.1"
-
-
-def _inject_distutils_command():
-    """Inject this module into the distutils.command package.
-
-    This is needed because distutils.dist.Distribution searches
-    commands by trying to import the respective module from this
-    package.
-    """
-    import distutils.command
-    mod = sys.modules[__name__]
-    cmds = ['build_test', 'test']
-    for c in cmds:
-        sys.modules['distutils.command.%s' % c] = mod
-        setattr(distutils.command, c, mod)
-    i = distutils.command.__all__.index('clean')
-    distutils.command.__all__[i:i] = cmds
-
-_inject_distutils_command()
 
 
 class _tmpchdir:
