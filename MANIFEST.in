@@ -2,4 +2,5 @@ include CHANGES
 include LICENSE.txt
 include MANIFEST.in
 include README.rst
+include _meta.py
 include tests/test_*.py
