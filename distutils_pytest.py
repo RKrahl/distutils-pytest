@@ -4,7 +4,8 @@
 import sys
 import os
 import os.path
-from setuptools import Command
+import setuptools
+import setuptools.dist
 from distutils.spawn import spawn
 
 __version__ = "0.1"
@@ -23,7 +24,7 @@ class _tmpchdir:
         os.chdir(self.savedir)
 
 
-class build_test(Command):
+class build_test(setuptools.Command):
     """Dummy.  This command is called at the beginning of test after
     build.  It does nothing, but it can be overridden by custom code
     in setup.py to build the test environment.
@@ -38,7 +39,7 @@ class build_test(Command):
         pass
 
 
-class test(Command):
+class test(setuptools.Command):
 
     description = "run the tests"
     user_options = [
@@ -101,3 +102,22 @@ class test(Command):
             testcmd.append("--collect-only")
         with _tmpchdir("tests"):
             spawn(testcmd)
+
+
+# Hack: put our command classes in priority, overriding the built-in
+# command classes from setuptools if needed.  Yes, this *is* evil.
+# But it is in self-defense.
+cmdclass = dict(build_test=build_test, test=test)
+
+_orig_dist_get_command_class = setuptools.dist.Distribution.get_command_class
+def _patched_get_command_class(self, command):
+    """A patched version of get_command_class(), putting some commands
+    from distutils_pytest in priority.
+    """
+    if command in self.cmdclass:
+        return self.cmdclass[command]
+    if command in cmdclass:
+        self.cmdclass[command] = cmdclass[command]
+        return self.cmdclass[command]
+    return _orig_dist_get_command_class(self, command)
+setuptools.dist.Distribution.get_command_class = _patched_get_command_class
