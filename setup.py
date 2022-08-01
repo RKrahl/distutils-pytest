@@ -29,4 +29,5 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Build Tools",
     ],
+    cmdclass = distutils_pytest.cmdclass,
 )
