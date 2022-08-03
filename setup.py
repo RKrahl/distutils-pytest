@@ -1,4 +1,10 @@
-"""Call pytest from a setup.py script.
+"""distutils-pytest - Call pytest from a setup.py script
+
+This Python module implements a `test` command for a `setup.py`
+script.  The command will call `pytest`_ to run your package's test
+suite.
+
+.. _pytest: http://pytest.org/
 """
 
 import distutils.cmd
@@ -104,7 +110,6 @@ class build_py(copy_file_mixin, distutils.command.build_py.build_py):
         super().run()
 
 
-
 setup(
     name = "distutils-pytest",
     version = version,
@@ -114,15 +119,16 @@ setup(
     author_email = "rolf@rotkraut.de",
     url = "https://github.com/RKrahl/distutils-pytest",
     license = "Apache-2.0",
+    requires = ["pytest"],
     py_modules = ["distutils_pytest"],
     classifiers = [
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Topic :: Software Development :: Build Tools",
     ],
     cmdclass = {'build_py': build_py, 'sdist': sdist, 'meta': meta},
