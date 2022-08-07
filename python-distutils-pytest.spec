@@ -41,7 +41,7 @@ python3 setup.py test
 
 %files
 %defattr(-,root,root)
-%doc README.rst CHANGES
+%doc README.rst CHANGES.rst
 %license LICENSE.txt
 %{python3_sitelib}/*
 

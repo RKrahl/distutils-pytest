@@ -1,37 +1,30 @@
 PYTHON   = python3
 
 
-sdist:
-	$(PYTHON) setup.py sdist
-
 build:
 	$(PYTHON) setup.py build
 
 test:
 	$(PYTHON) setup.py test
 
-doc-html:
-	$(MAKE) -C doc html
+sdist:
+	$(PYTHON) setup.py sdist
 
-doc-pdf:
-	$(MAKE) -C doc latexpdf
-
-doc-dist: doc-html
-	mkdir -p dist
-	cd doc/html; zip -r ../../dist/doc.zip *
-
+doc-html: meta
+	$(MAKE) -C doc html PYTHONPATH=$(CURDIR)
 
 clean:
-	rm -f *~ tests/*~
 	rm -rf build
+	rm -rf __pycache__
 
 distclean: clean
-	rm -rf .cache
-	rm -f MANIFEST
-	rm -f *.pyc
-	rm -rf __pycache__
+	rm -f MANIFEST _meta.py
 	rm -rf dist
+	rm -rf tests/.pytest_cache
 	$(MAKE) -C doc distclean
 
+meta:
+	$(PYTHON) setup.py meta
 
-.PHONY: sdist build test doc-html doc-pdf clean distclean
+
+.PHONY: build test sdist doc-html clean distclean meta
