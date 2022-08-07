@@ -1,42 +1,49 @@
-Name:		python-distutils-pytest
-Version:	0.1
-Release:	1
-Summary:	Call pytest from a distutils setup.py script
+%bcond_without tests
+%global distname distutils-pytest
+
+Name:		python3-%{distname}
+Version:	$version
+Release:	0
+Url:		$url
+Summary:	$description
 License:	Apache-2.0
 Group:		Development/Languages/Python
-Url:		https://pythonhosted.org/distutils-pytest/
-Source:		distutils-pytest-%{version}.tar.gz
+Source:		%{distname}-%{version}.tar.gz
+BuildRequires:	python3-base >= 3.4
+%if %{with tests}
+BuildRequires:	python3-pytest >= 3.0
+%endif
+Requires:	python3-pytest
 BuildArch:	noarch
-BuildRequires:	python-devel >= 2.6
-BuildRequires:	python-pytest
-Requires:	python-pytest
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 
 %description
-This Python module adds test to the commands in the distutils package.
+$long_description
 
 
 %prep
-%setup -q -n distutils-pytest-%{version}
+%setup -q -n %{distname}-%{version}
 
 
 %build
-python setup.py build
+python3 setup.py build
 
 
 %install
-python setup.py install --optimize=1 --prefix=%{_prefix} --root=%{buildroot}
+python3 setup.py install --optimize=1 --prefix=%{_prefix} --root=%{buildroot}
 
 
+%if %{with tests}
 %check
-python setup.py test
-
-
-%clean
-rm -rf %{buildroot}
+python3 setup.py test
+%endif
 
 
 %files
 %defattr(-,root,root)
-%doc README.rst CHANGES
-%{python_sitelib}/*
+%doc README.rst CHANGES.rst
+%license LICENSE.txt
+%{python3_sitelib}/*
+
+
+%changelog
