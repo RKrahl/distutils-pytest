@@ -1,53 +1,58 @@
-distutils-pytest - Call pytest from a distutils setup.py script
-===============================================================
+|pypi|
 
-This Python module adds ``test`` to the commands in the `distutils`_
-package.  If your ``setup.py`` imports ``distutils_pytest``, the user
-may run::
+.. |pypi| image:: https://img.shields.io/pypi/v/distutils-pytest
+   :target: https://pypi.org/project/distutils-pytest/
+   :alt: PyPI version
 
-  python setup.py test
+distutils-pytest - Call pytest from a setup.py script
+=====================================================
 
-This will call `pytest`_ to run your package's test suite.
-
-See also the home page of the package at
-https://pythonhosted.org/distutils-pytest/
-
+This Python module implements a `test` command for a `setup.py`
+script.  The command will call `pytest`_ to run your package's test
+suite.
 
 Download
 --------
 
-The latest release version can be found at PyPI, see
+The latest release version can be found in the
+`Python Package Index (PyPI)`__.
 
-    https://pypi.python.org/pypi/distutils-pytest
+.. __: `PyPI site`_
 
 
 System requirements
 -------------------
 
-+ Python 2.6, 2.7, or 3.1 and newer.
+Python
+......
+
++ 3.4 and newer.
+
+Required library packages
+.........................
+
 + `pytest`_
+
+Optional library packages
+.........................
+
+These packages are only needed in certain cases:
+
++ `setuptools_scm`_
+
+  The version number is managed using this package.  All source
+  distributions add a static file with the version number and fall
+  back using that if `setuptools_scm` is not available.  So this
+  package is only needed to build out of the plain development source
+  tree as cloned from GitHub.
 
 
 Installation
 ------------
 
-This package uses the `distutils`_ Python standard library package and
-follows its conventions of packaging source distributions.  See the
-documentation on `Installing Python Modules`_ for details or to
-customize the install process.
+You can install python-icat from PyPI using pip::
 
-1. Download the sources, unpack, and change into the source directory.
-
-2. Build::
-
-     $ python setup.py build
-
-3. Install::
-
-     $ python setup.py install
-
-The last step might require admin privileges in order to write into
-the site-packages directory of your Python installation.
+  $ pip install distutils-pytest
 
 
 Copyright and License
@@ -55,13 +60,10 @@ Copyright and License
 
 - Copyright 2013-2015
   Helmholtz-Zentrum Berlin für Materialien und Energie GmbH
-- Copyright 2015-2016 Rolf Krahl
+- Copyright 2015-2022 Rolf Krahl
 
-Licensed under the Apache License, Version 2.0 (the "License"); you
-may not use this file except in compliance with the License.  You may
-obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the `Apache License`_, Version 2.0 (the "License"); you
+may not use this package except in compliance with the License.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -70,6 +72,7 @@ implied.  See the License for the specific language governing
 permissions and limitations under the License.
 
 
-.. _distutils: https://docs.python.org/2.7/library/distutils.html
 .. _pytest: http://pytest.org/
-.. _Installing Python Modules: https://docs.python.org/2.7/install/
+.. _PyPI site: https://pypi.org/project/distutils-pytest/
+.. _setuptools_scm: https://github.com/pypa/setuptools_scm/
+.. _Apache License: https://www.apache.org/licenses/LICENSE-2.0

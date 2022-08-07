@@ -1,5 +1,4 @@
-"""Call pytest from a distutils setup.py script.
-"""
+"""$DOC"""
 
 import sys
 import os
@@ -7,7 +6,7 @@ import os.path
 import setuptools
 from distutils.spawn import spawn
 
-__version__ = "0.1"
+__version__ = "$VERSION"
 
 
 class _tmpchdir:
@@ -93,7 +92,7 @@ class test(setuptools.Command):
         # Must change the directory, otherwise modules in the cwd
         # would override the one from build_lib.  Alas, there seem to
         # be no way to tell Python not to put the cwd in front of
-        # $PYTHONPATH in sys.path.
+        # PYTHONPATH in sys.path.
         testcmd = [sys.executable, "-m", "pytest"]
         if self.test_args:
             testcmd.extend(self.test_args.split())
