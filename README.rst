@@ -74,4 +74,5 @@ permissions and limitations under the License.
 
 .. _pytest: http://pytest.org/
 .. _PyPI site: https://pypi.org/project/distutils-pytest/
+.. _setuptools_scm: https://github.com/pypa/setuptools_scm/
 .. _Apache License: https://www.apache.org/licenses/LICENSE-2.0
