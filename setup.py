@@ -31,7 +31,6 @@ except (ImportError, LookupError):
         version = "UNKNOWN"
 
 docstring = __doc__
-doclines = docstring.strip().split("\n")
 
 class copy_file_mixin:
     """Distutils copy_file() mixin.
@@ -113,17 +112,18 @@ class build_py(copy_file_mixin, setuptools.command.build_py.build_py):
         super().run()
 
 
+with Path("README.rst").open("rt", encoding="utf8") as f:
+    readme = f.read()
+
 setup(
     name = "distutils-pytest",
     version = version,
-    description = doclines[0],
-    long_description = "\n".join(doclines[2:]),
+    description = "Call pytest from a setup.py script",
+    long_description = readme,
+    url = "https://github.com/RKrahl/distutils-pytest",
     author = "Rolf Krahl",
     author_email = "rolf@rotkraut.de",
-    url = "https://github.com/RKrahl/distutils-pytest",
     license = "Apache-2.0",
-    requires = ["pytest"],
-    py_modules = ["distutils_pytest"],
     classifiers = [
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -134,6 +134,9 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Topic :: Software Development :: Build Tools",
     ],
+    py_modules = ["distutils_pytest"],
+    install_requires = ["pytest"],
+    python_requires = ">=3.4",
     cmdclass = dict(distutils_pytest.cmdclass,
                     build_py=build_py, sdist=sdist, meta=meta),
 )
