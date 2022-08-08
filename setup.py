@@ -7,12 +7,12 @@ suite.
 .. _pytest: http://pytest.org/
 """
 
+import setuptools
 from setuptools import setup
-import distutils.cmd
-import distutils.command.build_py
+import setuptools.command.build_py
 import distutils.command.sdist
 import distutils.file_util
-import distutils.log
+from distutils import log
 from glob import glob
 import os
 from pathlib import Path
@@ -27,7 +27,7 @@ except (ImportError, LookupError):
         import _meta
         version = _meta.__version__
     except ImportError:
-        distutils.log.warn("warning: cannot determine version number")
+        log.warn("warning: cannot determine version number")
         version = "UNKNOWN"
 
 docstring = __doc__
@@ -48,11 +48,11 @@ class copy_file_mixin:
             infile = Path(infile)
             outfile = Path(outfile)
             if outfile.name == infile.name:
-                distutils.log.info("copying (with substitutions) %s -> %s",
-                                   infile, outfile.parent)
+                log.info("copying (with substitutions) %s -> %s",
+                         infile, outfile.parent)
             else:
-                distutils.log.info("copying (with substitutions) %s -> %s",
-                                   infile, outfile)
+                log.info("copying (with substitutions) %s -> %s",
+                         infile, outfile)
             if not self.dry_run:
                 st = infile.stat()
                 try:
@@ -72,7 +72,7 @@ class copy_file_mixin:
                                                  not self.force, link,
                                                  dry_run=self.dry_run)
 
-class meta(distutils.cmd.Command):
+class meta(setuptools.Command):
     description = "generate meta files"
     user_options = []
     meta_template = '''
@@ -89,6 +89,9 @@ __version__ = "%(version)s"
         with Path("_meta.py").open("wt") as f:
             print(self.meta_template % values, file=f)
 
+# Note: Do not use setuptools for making the source distribution,
+# rather use the good old distutils instead.
+# Rationale: https://rhodesmill.org/brandon/2009/eby-magic/
 class sdist(copy_file_mixin, distutils.command.sdist.sdist):
     def run(self):
         self.run_command('meta')
@@ -104,7 +107,7 @@ class sdist(copy_file_mixin, distutils.command.sdist.sdist):
                 with Path(self.dist_dir, spec).open('wt') as outf:
                     outf.write(string.Template(inf.read()).substitute(subst))
 
-class build_py(copy_file_mixin, distutils.command.build_py.build_py):
+class build_py(copy_file_mixin, setuptools.command.build_py.build_py):
     def run(self):
         self.run_command('meta')
         super().run()
