@@ -7,6 +7,10 @@ Changelog
 Incompatible changes
 --------------------
 
++ `#4`_, `#5`_: Move from `distutils` to `setuptools`.  As a result,
+  the command classes defined by `distutils-pytest` need to be
+  explicitly passed in the `cmdclass` keyword argument to `setup()`.
+
 + `#3`_: Drop support for Python 3.3 and older.
 
 Bug fixes and minor changes
@@ -15,6 +19,8 @@ Bug fixes and minor changes
 + `#3`_: Use :mod:`setuptools_scm` to manage the version number.
 
 .. _#3: https://github.com/RKrahl/distutils-pytest/pull/3
+.. _#4: https://github.com/RKrahl/distutils-pytest/issues/4
+.. _#5: https://github.com/RKrahl/distutils-pytest/pull/5
 
 
 0.1 (2016-04-01)

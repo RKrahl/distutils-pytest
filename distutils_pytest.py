@@ -3,29 +3,10 @@
 import sys
 import os
 import os.path
-from distutils.core import Command
+import setuptools
 from distutils.spawn import spawn
 
 __version__ = "$VERSION"
-
-
-def _inject_distutils_command():
-    """Inject this module into the distutils.command package.
-
-    This is needed because distutils.dist.Distribution searches
-    commands by trying to import the respective module from this
-    package.
-    """
-    import distutils.command
-    mod = sys.modules[__name__]
-    cmds = ['build_test', 'test']
-    for c in cmds:
-        sys.modules['distutils.command.%s' % c] = mod
-        setattr(distutils.command, c, mod)
-    i = distutils.command.__all__.index('clean')
-    distutils.command.__all__[i:i] = cmds
-
-_inject_distutils_command()
 
 
 class _tmpchdir:
@@ -41,7 +22,7 @@ class _tmpchdir:
         os.chdir(self.savedir)
 
 
-class build_test(Command):
+class build_test(setuptools.Command):
     """Dummy.  This command is called at the beginning of test after
     build.  It does nothing, but it can be overridden by custom code
     in setup.py to build the test environment.
@@ -56,7 +37,7 @@ class build_test(Command):
         pass
 
 
-class test(Command):
+class test(setuptools.Command):
 
     description = "run the tests"
     user_options = [
@@ -119,3 +100,6 @@ class test(Command):
             testcmd.append("--collect-only")
         with _tmpchdir("tests"):
             spawn(testcmd)
+
+
+cmdclass = dict(build_test=build_test, test=test)

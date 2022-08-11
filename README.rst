@@ -31,6 +31,8 @@ Python
 Required library packages
 .........................
 
++ `setuptools`_
+
 + `pytest`_
 
 Optional library packages
@@ -74,5 +76,6 @@ permissions and limitations under the License.
 
 .. _pytest: http://pytest.org/
 .. _PyPI site: https://pypi.org/project/distutils-pytest/
+.. _setuptools: https://github.com/pypa/setuptools/
 .. _setuptools_scm: https://github.com/pypa/setuptools_scm/
 .. _Apache License: https://www.apache.org/licenses/LICENSE-2.0

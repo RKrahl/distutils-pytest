@@ -7,12 +7,12 @@ suite.
 .. _pytest: http://pytest.org/
 """
 
-import distutils.cmd
-import distutils.command.build_py
+import setuptools
+from setuptools import setup
+import setuptools.command.build_py
 import distutils.command.sdist
-from distutils.core import setup
 import distutils.file_util
-import distutils.log
+from distutils import log
 from glob import glob
 import os
 from pathlib import Path
@@ -27,11 +27,10 @@ except (ImportError, LookupError):
         import _meta
         version = _meta.__version__
     except ImportError:
-        distutils.log.warn("warning: cannot determine version number")
+        log.warn("warning: cannot determine version number")
         version = "UNKNOWN"
 
 docstring = __doc__
-doclines = docstring.strip().split("\n")
 
 class copy_file_mixin:
     """Distutils copy_file() mixin.
@@ -48,11 +47,11 @@ class copy_file_mixin:
             infile = Path(infile)
             outfile = Path(outfile)
             if outfile.name == infile.name:
-                distutils.log.info("copying (with substitutions) %s -> %s",
-                                   infile, outfile.parent)
+                log.info("copying (with substitutions) %s -> %s",
+                         infile, outfile.parent)
             else:
-                distutils.log.info("copying (with substitutions) %s -> %s",
-                                   infile, outfile)
+                log.info("copying (with substitutions) %s -> %s",
+                         infile, outfile)
             if not self.dry_run:
                 st = infile.stat()
                 try:
@@ -72,7 +71,7 @@ class copy_file_mixin:
                                                  not self.force, link,
                                                  dry_run=self.dry_run)
 
-class meta(distutils.cmd.Command):
+class meta(setuptools.Command):
     description = "generate meta files"
     user_options = []
     meta_template = '''
@@ -89,6 +88,9 @@ __version__ = "%(version)s"
         with Path("_meta.py").open("wt") as f:
             print(self.meta_template % values, file=f)
 
+# Note: Do not use setuptools for making the source distribution,
+# rather use the good old distutils instead.
+# Rationale: https://rhodesmill.org/brandon/2009/eby-magic/
 class sdist(copy_file_mixin, distutils.command.sdist.sdist):
     def run(self):
         self.run_command('meta')
@@ -104,23 +106,24 @@ class sdist(copy_file_mixin, distutils.command.sdist.sdist):
                 with Path(self.dist_dir, spec).open('wt') as outf:
                     outf.write(string.Template(inf.read()).substitute(subst))
 
-class build_py(copy_file_mixin, distutils.command.build_py.build_py):
+class build_py(copy_file_mixin, setuptools.command.build_py.build_py):
     def run(self):
         self.run_command('meta')
         super().run()
 
 
+with Path("README.rst").open("rt", encoding="utf8") as f:
+    readme = f.read()
+
 setup(
     name = "distutils-pytest",
     version = version,
-    description = doclines[0],
-    long_description = "\n".join(doclines[2:]),
+    description = "Call pytest from a setup.py script",
+    long_description = readme,
+    url = "https://github.com/RKrahl/distutils-pytest",
     author = "Rolf Krahl",
     author_email = "rolf@rotkraut.de",
-    url = "https://github.com/RKrahl/distutils-pytest",
     license = "Apache-2.0",
-    requires = ["pytest"],
-    py_modules = ["distutils_pytest"],
     classifiers = [
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -129,7 +132,17 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Software Development :: Build Tools",
     ],
-    cmdclass = {'build_py': build_py, 'sdist': sdist, 'meta': meta},
+    py_modules = ["distutils_pytest"],
+    install_requires = ["pytest"],
+    python_requires = ">=3.4",
+    cmdclass = dict(distutils_pytest.cmdclass,
+                    build_py=build_py, sdist=sdist, meta=meta),
 )
