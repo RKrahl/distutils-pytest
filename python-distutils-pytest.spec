@@ -10,6 +10,7 @@ License:	Apache-2.0
 Group:		Development/Languages/Python
 Source:		%{distname}-%{version}.tar.gz
 BuildRequires:	python3-base >= 3.4
+BuildRequires:	python3-setuptools
 %if %{with tests}
 BuildRequires:	python3-pytest >= 3.0
 %endif
