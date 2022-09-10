@@ -1,10 +1,8 @@
 """distutils-pytest - Call pytest from a setup.py script
 
 This Python module implements a `test` command for a `setup.py`
-script.  The command will call `pytest`_ to run your package's test
+script.  The command will call `pytest` to run your package's test
 suite.
-
-.. _pytest: http://pytest.org/
 """
 
 import setuptools
@@ -99,7 +97,7 @@ class sdist(copy_file_mixin, distutils.command.sdist.sdist):
             "version": self.distribution.get_version(),
             "url": self.distribution.get_url(),
             "description": self.distribution.get_description(),
-            "long_description": self.distribution.get_long_description(),
+            "long_description": docstring.split("\n", maxsplit=2)[2].strip(),
         }
         for spec in glob("*.spec"):
             with Path(spec).open('rt') as inf:
