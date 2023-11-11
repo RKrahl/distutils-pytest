@@ -1,22 +1,30 @@
 %bcond_without tests
 %global distname distutils-pytest
 
-Name:		python3-%{distname}
+%if 0%{?sle_version} >= 150500
+%{?sle15_python_module_pythons}
+%else
+%{?!python_module:%define python_module() python3-%{**}}
+%endif
+
+Name:		python-%{distname}
 Version:	$version
 Release:	0
-Url:		$url
 Summary:	$description
 License:	Apache-2.0
+URL:		$url
 Group:		Development/Languages/Python
-Source:		%{distname}-%{version}.tar.gz
-BuildRequires:	python3-base >= 3.4
-BuildRequires:	python3-setuptools
+Source:		https://github.com/RKrahl/distutils-pytest/releases/download/%{version}/%{distname}-%{version}.tar.gz
+BuildRequires:	%{python_module base >= 3.4}
+BuildRequires:	%{python_module setuptools}
+BuildRequires:	fdupes
+BuildRequires:	python-rpm-macros
 %if %{with tests}
-BuildRequires:	python3-pytest >= 3.0
+BuildRequires:	%{python_module pytest >= 3.0}
 %endif
-Requires:	python3-pytest
+Requires:	python-pytest
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-build
+%python_subpackages
 
 %description
 $long_description
@@ -27,24 +35,24 @@ $long_description
 
 
 %build
-python3 setup.py build
+%python_build
 
 
 %install
-python3 setup.py install --optimize=1 --prefix=%{_prefix} --root=%{buildroot}
+%python_install
+%fdupes %{buildroot}%{python_sitelib}
 
 
 %if %{with tests}
 %check
-python3 setup.py test
+%python_expand $$python setup.py test
 %endif
 
 
-%files
-%defattr(-,root,root)
-%doc README.rst CHANGES.rst
+%files %{python_files}
 %license LICENSE.txt
-%{python3_sitelib}/*
+%doc README.rst CHANGES.rst
+%{python_sitelib}/*
 
 
 %changelog
