@@ -1,4 +1,8 @@
-|pypi|
+|gh-test| |pypi|
+
+.. |gh-test| image:: https://img.shields.io/github/actions/workflow/status/RKrahl/distutils-pytest/run-tests.yaml?branch=master
+   :target: https://github.com/RKrahl/distutils-pytest/actions/workflows/run-tests.yaml
+   :alt: GitHub Workflow Status
 
 .. |pypi| image:: https://img.shields.io/pypi/v/distutils-pytest
    :target: https://pypi.org/project/distutils-pytest/
@@ -14,10 +18,10 @@ suite.
 Download
 --------
 
-The latest release version can be found in the
-`Python Package Index (PyPI)`__.
+The latest release version can be found at the
+`release page on GitHub`__.
 
-.. __: `PyPI site`_
+.. __: `GitHub release`_
 
 
 System requirements
@@ -75,7 +79,7 @@ permissions and limitations under the License.
 
 
 .. _pytest: http://pytest.org/
-.. _PyPI site: https://pypi.org/project/distutils-pytest/
+.. _GitHub release: https://github.com/RKrahl/distutils-pytest/releases/latest
 .. _setuptools: https://github.com/pypa/setuptools/
 .. _setuptools_scm: https://github.com/pypa/setuptools_scm/
 .. _Apache License: https://www.apache.org/licenses/LICENSE-2.0
