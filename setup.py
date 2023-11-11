@@ -118,6 +118,7 @@ setup(
     version = version,
     description = "Call pytest from a setup.py script",
     long_description = readme,
+    long_description_content_type = "text/x-rst",
     url = "https://github.com/RKrahl/distutils-pytest",
     author = "Rolf Krahl",
     author_email = "rolf@rotkraut.de",
@@ -139,9 +140,13 @@ setup(
         "Programming Language :: Python :: 3.12",
         "Topic :: Software Development :: Build Tools",
     ],
+    project_urls = dict(
+        Source="https://github.com/RKrahl/distutils-pytest/",
+        Download="https://github.com/RKrahl/distutils-pytest/releases/latest",
+    ),
     py_modules = ["distutils_pytest"],
-    install_requires = ["pytest"],
     python_requires = ">=3.4",
+    install_requires = ["pytest"],
     cmdclass = dict(distutils_pytest.cmdclass,
                     build_py=build_py, sdist=sdist, meta=meta),
 )
