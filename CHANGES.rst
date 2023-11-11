@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.2.1 (2023-11-11)
+~~~~~~~~~~~~~~~~~~
+
+No changes to the installed module.  Only some updates to the
+toolchain to build and install it.
+
+
 0.2 (2022-08-12)
 ~~~~~~~~~~~~~~~~
 
